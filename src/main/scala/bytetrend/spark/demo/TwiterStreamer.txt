@@ -20,8 +20,7 @@ import com.typesafe.config.ConfigFactory
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
-import org.json4s._
-import org.json4s.native.JsonMethods._
+import net.liftweb.json._
 
 class TweetterStreamer(implicit val system: ActorSystem) {
 

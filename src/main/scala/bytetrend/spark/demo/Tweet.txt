@@ -1,4 +1,6 @@
 package bytetrend.spark.demo
+
+
 case class Tweet(
                   contributors: Option[Seq[Contributor]],
                   coordinates: Option[Coordinates],
@@ -32,7 +34,8 @@ case class Tweet(
                   withheldCopyright: Option[Boolean],
                   withheldInCountries: Option[Seq[String]],
                   withheldScope: Option[String]
-                )
+                ) extends Serializable
+
 case class Users(
                   contributors_enabled: Boolean,
                   created_at: String,
@@ -77,7 +80,8 @@ case class Users(
                   verified: Boolean,
                   withheld_in_countries: Option[String],
                   withheld_scope: Option[String]
-                )
+                ) extends Serializable
+
 case class Tweets(
                    contributors: Seq[Contributor],
                    coordinates: Coordinates,
@@ -111,7 +115,8 @@ case class Tweets(
                    withheld_copyright: Option[Boolean],
                    withheld_in_countries: Option[Seq[String]],
                    withheld_scope: Option[String]
-                 )
+                 ) extends Serializable
+
 case class Place(
                   attributes: Map[String, String],
                   bounding_box: BoundingBox,
@@ -122,7 +127,8 @@ case class Place(
                   name: String,
                   place_type: String,
                   url: String
-                )
+                ) extends Serializable
+
 case class Media(
                   display_url: String,
                   expanded_url: String,
@@ -136,13 +142,22 @@ case class Media(
                   source_status_id_str: Option[String],
                   `type`: String,
                   url: String
-                )
-case class BoundingBox(coordinates: Seq[Seq[Seq[Float]]], `type`: String)
-case class Contributor(id: Long, id_str: String, screen_name: String)
-case class Coordinates(coordinates: Seq[Float], `type`: String)
-case class Entities(hashtags: Seq[Hashtag], media: Seq[Media], urls: Seq[Url], user_mentions: Option[Seq[UserMention]])
-case class Sizes(thumb: Size, large: Size, medium: Size, small: Size)
-case class Size(h: Int, w: Int, resize: String)
-case class Hashtag(indices: Seq[Int], text: String)
-case class Url(display_url: String, expanded_url: String, indices: Seq[Int], url: String)
-case class UserMention(id: Long, id_str: String, indices: Seq[Int], name: String, screen_name: String)
+                ) extends Serializable
+
+case class BoundingBox(coordinates: Seq[Seq[Seq[Float]]], `type`: String) extends Serializable
+
+case class Contributor(id: Long, id_str: String, screen_name: String) extends Serializable
+
+case class Coordinates(coordinates: Seq[Float], `type`: String) extends Serializable
+
+case class Entities(hashtags: Seq[Hashtag], media: Seq[Media], urls: Seq[Url], user_mentions: Option[Seq[UserMention]]) extends Serializable
+
+case class Sizes(thumb: Size, large: Size, medium: Size, small: Size) extends Serializable
+
+case class Size(h: Int, w: Int, resize: String) extends Serializable
+
+case class Hashtag(indices: Seq[Int], text: String) extends Serializable
+
+case class Url(display_url: String, expanded_url: String, indices: Seq[Int], url: String) extends Serializable
+
+case class UserMention(id: Long, id_str: String, indices: Seq[Int], name: String, screen_name: String) extends Serializable

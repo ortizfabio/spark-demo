@@ -1,18 +1,15 @@
 package bytetrend.spark.demo
 
-import akka.util.Timeout
 import com.typesafe.config.{Config, ConfigFactory}
 
-import scala.concurrent.duration.FiniteDuration
 import scala.util.Try
 
 
 class Settings(val config: Config) {
-  val processorConfig = config.getConfig("spark-demo")
+  val appName = "spark-demo"
+  val processorConfig = config.getConfig(appName)
 
-  import processorConfig._
-
-  def getKafkaConnect(): KafkaConnect = KafkaConnect(
+  def getKafkaConnect: KafkaConnect = KafkaConnect(
     Try {
       Some(processorConfig.getString("kafkaConnect.group.id"))
     }.getOrElse(None),
@@ -27,12 +24,19 @@ class Settings(val config: Config) {
     }.getOrElse(None)
   )
 
-  def getOauth(): TweeterCredentials = TweeterCredentials(
+  def getOauth: TweeterCredentials = TweeterCredentials(
     processorConfig.getString("oauth.consumerKey"),
     processorConfig.getString("oauth.consumerSecret"),
     processorConfig.getString("oauth.accessToken"),
     processorConfig.getString("oauth.accessTokenSecret")
   )
+
+  def queryList(): String = {
+    import scala.collection.JavaConversions._
+
+    val list = processorConfig.getStringList("twitterQuery.key")
+    list.mkString("", ",", "")
+  }
 }
 
 object Settings extends Settings(ConfigFactory.load)
@@ -50,5 +54,5 @@ case class TweeterCredentials(
                                consumerKey: String,
                                consumerSecret: String,
                                accessToken: String,
-                               accessTokenSecret:String
+                               accessTokenSecret: String
                              )
